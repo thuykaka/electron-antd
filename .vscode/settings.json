@@ -10,7 +10,7 @@
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
   "[typescriptreact]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
+    "editor.defaultFormatter": "vscode.typescript-language-features"
   },
   "[javascript]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
@@ -32,5 +32,7 @@
   "create.defaultFolderTemplate": "react-component",
   "cSpell.words": [
     "remixicon"
-  ]
+  ],
+  "editor.insertSpaces": true,
+  "editor.tabSize": 2
 }

@@ -17,6 +17,7 @@ const DEFAULT_CONFIG = {
   headers: {
     'Content-Type': 'application/json',
   },
+  responseType: 'json',
 }
 
 // 默认传递的参数
@@ -58,16 +59,18 @@ export async function request<T extends AnyObj = AnyObj>(
     sendData.data = paramsData
   }
 
+  console.log(sendData)
+
   return axios(sendData)
     .then((res) => {
       const data: T = res.data
 
       // TODO 根据后端接口设定成功条件, 例如此处 `data.code == 200`
-      if (!checkStatus || data.code == 200) {
-        return data
-      } else {
-        return Promise.reject(data)
-      }
+      // if (!checkStatus || data.code == 200) {
+      return data
+      // } else {
+      //   return Promise.reject(data)
+      // }
     })
     .catch(async (err) => {
       await errorAction(err, sendData, options)

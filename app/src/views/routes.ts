@@ -2,9 +2,9 @@ const routes: RouteConfig[] = [
   {
     key: 'Home',
     path: '/',
-    redirect: { to: '/demo?form=home' },
+    redirect: { to: '/demo' },
     windowOptions: {
-      title: 'App Home (redirect to demo)',
+      title: 'Electron App',
       width: 1200,
       height: 800,
       minWidth: 800,
@@ -13,7 +13,7 @@ const routes: RouteConfig[] = [
     createConfig: {
       showSidebar: true,
       saveWindowBounds: true,
-      // openDevTools: true,
+      openDevTools: true,
     },
   },
 ]
