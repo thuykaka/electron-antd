@@ -59,10 +59,13 @@ export async function request<T extends AnyObj = AnyObj>(
     sendData.data = paramsData
   }
 
+  $tools.log.info('request', sendData)
+
   return axios(sendData)
     .then((res) => {
       const data: T = res.data
-
+      $tools.log.info('response headers', res.headers)
+      $tools.log.info('response data', data)
       // TODO 根据后端接口设定成功条件, 例如此处 `data.code == 200`
       // if (!checkStatus || data.code == 200) {
       return data
