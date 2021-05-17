@@ -5,6 +5,7 @@ import { Provider } from 'react-redux'
 import { asyncImport } from '../async-import'
 import { beforeRouter } from './router-hooks'
 import * as pageResource from '@/src/page-resource'
+import { store } from '@/core/store'
 
 interface AppRouterProps {
   routes: Map<string, RouteConfig>
@@ -73,27 +74,30 @@ export class AppRouter extends React.Component<AppRouterProps, AppRouterState> {
   }
 
   creatRoute = (routeConfig: RouteConfig, key: string): JSX.Element | void => {
-    const { path, exact = true, redirect, ...params } = routeConfig
+    const { path, exact = true, redirect, isProtected, ...params } = routeConfig
     const routeProps: any = { key, name: key, path, exact }
-
-    if (redirect) {
-      routeProps.render = (props: RouteComponentProps) => <Redirect {...redirect} {...props} />
+    if (isProtected) {
+      routeProps.render = () => <Redirect to="/login" />
     } else {
-      const resource = pageResource[key]
-      if (!resource) return
+      if (redirect) {
+        routeProps.render = (props: RouteComponentProps) => <Redirect {...redirect} {...props} />
+      } else {
+        const resource = pageResource[key]
+        if (!resource) return
 
-      const Comp = resource.constructor === Promise ? asyncImport(resource, beforeRouter) : resource
+        const Comp = resource.constructor === Promise ? asyncImport(resource, beforeRouter) : resource
 
-      routeProps.render = (props: RouteComponentProps) => {
-        const nextProps = {
-          name: key,
-          currentWindow,
-          closeWindow: this.closeWindow,
-          query: $tools.getQuery(props.location.search),
-          ...props,
-          ...params,
+        routeProps.render = (props: RouteComponentProps) => {
+          const nextProps = {
+            name: key,
+            currentWindow,
+            closeWindow: this.closeWindow,
+            query: $tools.getQuery(props.location.search),
+            ...props,
+            ...params,
+          }
+          return <Comp {...nextProps} />
         }
-        return <Comp {...nextProps} />
       }
     }
 

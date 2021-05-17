@@ -1,23 +1,25 @@
 import React, { FunctionComponent } from 'react'
-import { Form, Input, Button, Checkbox } from 'antd'
+import { Form, Input, Button, Checkbox, message, Alert } from 'antd'
 import { UserOutlined, LockOutlined } from '@ant-design/icons'
 import { withStore } from '@/core/store'
 
 import './login.less'
 
-const sleep = (ms: number): Promise<void> => new Promise((resolve) => setTimeout(resolve, ms))
-
 const Login: FunctionComponent = (props: any) => {
-  const { user, loginLoading, dispatch } = props
+  const { user, loginLoading, loginError, dispatch, history } = props
 
   const onFinish = async ({ username, password }: any) => {
-    console.log(username, password)
-    const queryData = { mvClientID: 'FIA0074', mvPassword: '123456' }
+    const queryData = { mvClientID: username, mvPassword: password }
     dispatch({ type: 'CHANGE_LOGIN_LOADING', data: true })
     try {
-      await sleep(10000)
       const res = await $api.queryLogin(queryData)
-      dispatch({ type: 'LOGIN_SUCCESS', data: res })
+      if (res.success) {
+        dispatch({ type: 'LOGIN_SUCCESS', data: res })
+        message.success('Login success')
+        history.push('/demo')
+      } else {
+        dispatch({ type: 'LOGIN_FAILED', data: res.errorMessage })
+      }
     } catch (err) {
       dispatch({ type: 'LOGIN_FAILED', data: err.message })
     }
@@ -25,7 +27,12 @@ const Login: FunctionComponent = (props: any) => {
 
   return (
     <div className="login flex column center" style={{ height: '100%' }}>
-      <Form name="normal_login" className="login-form" initialValues={{ remember: true }} onFinish={onFinish}>
+      <Form
+        name="normal_login"
+        className="login-form"
+        initialValues={{ remember: true, username: 'FIA0074', password: '123456' }}
+        onFinish={onFinish}
+      >
         <Form.Item name="username" rules={[{ required: true, message: 'Please input your Username!' }]}>
           <Input prefix={<UserOutlined className="site-form-item-icon" />} placeholder="Username" />
         </Form.Item>
@@ -45,7 +52,11 @@ const Login: FunctionComponent = (props: any) => {
             Forgot password
           </a>
         </Form.Item>
-
+        {!!loginError && (
+          <Form.Item>
+            <Alert message={loginError} type="error" />
+          </Form.Item>
+        )}
         <Form.Item>
           <Button type="primary" htmlType="submit" className="login-form-button" loading={loginLoading}>
             Log in
@@ -53,8 +64,6 @@ const Login: FunctionComponent = (props: any) => {
           Or <a href="">register now!</a>
         </Form.Item>
       </Form>
-      <pre>User: {JSON.stringify(user)}</pre>
-      <pre>Loading: {JSON.stringify(loginLoading)}</pre>
     </div>
   )
 }

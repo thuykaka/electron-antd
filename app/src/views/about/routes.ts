@@ -2,6 +2,7 @@ const routes: RouteConfig[] = [
   {
     key: 'About',
     path: '/about',
+    isProtected: true,
     windowOptions: {
       title: 'About',
       resizable: false,

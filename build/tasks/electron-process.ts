@@ -42,7 +42,7 @@ export default class ElectronProcess {
 
   private startElectron() {
     // @ts-ignore
-    this.process = spawn(electron, ['.'])
+    this.process = spawn(electron, ['--inspect=9229', '.'])
     this.restarting = false
     if (this.process) {
       exConsole.success(`Electron main process has ${this.isRestart ? 'restarted' : 'started'}.`)

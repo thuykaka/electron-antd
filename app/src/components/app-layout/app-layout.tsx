@@ -2,7 +2,6 @@ import React from 'react'
 import $c from 'classnames'
 
 import { AppTitlebar, AppSidebar } from '../'
-
 import './app-layout.less'
 
 interface AppLayoutProps {

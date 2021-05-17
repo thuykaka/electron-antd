@@ -1,6 +1,6 @@
 export function queryLogin(
   params?: queryTestInfoUsingGET.Params,
   options?: RequestOptions
-): Promise<queryTestInfoUsingGET.Response> {
+): Promise<{ errorCode: string; errorMessage: string; success: boolean }> {
   return $api.request('/restttl/dologin', params, options)
 }

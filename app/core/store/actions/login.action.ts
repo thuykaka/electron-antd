@@ -6,7 +6,7 @@ interface LoginState {
 
 export const initialState: LoginState = {
   loginLoading: false,
-  user: [],
+  user: {},
   loginError: null,
 }
 
@@ -26,7 +26,7 @@ export function LOGIN_SUCCESS(data: StoreDatas['LOGIN_SUCCESS']): LoginState {
 
 export function LOGIN_FAILED(data: StoreDatas['LOGIN_FAILED']): LoginState {
   return {
-    user: [],
+    user: {},
     loginLoading: false,
     loginError: data,
   }

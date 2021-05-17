@@ -50,6 +50,7 @@ declare global {
     redirect?: RedirectProps
     /** 默认为 true */
     exact?: boolean
+    isProtected?: boolean
   }
 
   /** 页面默认 props */

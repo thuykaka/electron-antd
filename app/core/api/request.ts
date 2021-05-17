@@ -59,8 +59,6 @@ export async function request<T extends AnyObj = AnyObj>(
     sendData.data = paramsData
   }
 
-  console.log(sendData)
-
   return axios(sendData)
     .then((res) => {
       const data: T = res.data
