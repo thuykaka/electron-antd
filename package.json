@@ -83,6 +83,7 @@
   },
   "homepage": "https://github.com/lanten/electron-antd#readme",
   "dependencies": {
-    "electron-cookies": "^1.1.0"
+    "electron-cookies": "^1.1.0",
+    "react-client-captcha": "^1.0.3"
   }
 }

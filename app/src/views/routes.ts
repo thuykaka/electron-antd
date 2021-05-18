@@ -4,7 +4,7 @@ const routes: RouteConfig[] = [
     path: '/',
     redirect: { to: '/demo' },
     windowOptions: {
-      title: 'Electron App',
+      title: 'MAS App',
       width: 1200,
       height: 800,
       minWidth: 800,
